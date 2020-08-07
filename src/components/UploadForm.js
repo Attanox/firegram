@@ -6,7 +6,7 @@ const UploadForm = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
 
-  const allowedTypes = ["image/png", "image/jpg"];
+  const allowedTypes = ["image/png", "image/jpeg"];
 
   const handleOnChange = (e) => {
     const {
@@ -19,7 +19,7 @@ const UploadForm = () => {
       setError("");
     } else {
       setFile(null);
-      setError("Please, select file of a type .jpg or .png");
+      setError("Please, select file of a type .jpeg or .png");
     }
   };
 

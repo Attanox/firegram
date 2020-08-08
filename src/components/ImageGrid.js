@@ -1,12 +1,6 @@
 import React from "react";
 import useFirestore from "../hooks/useFirestore";
-import {
-  withStyles,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CircularProgress,
-} from "@material-ui/core";
+import { withStyles, Card, CircularProgress } from "@material-ui/core";
 
 const styles = () => ({
   root: {
@@ -20,15 +14,24 @@ const styles = () => ({
     padding: "50% 0",
     /* padding controls height, will always be perfectly square regardless of width */
     position: "relative",
+    transition: "all 0.3s ease-in-out",
     opacity: "0.8",
+    "&:hover": {
+      opacity: "1",
+    },
   },
   image: {
     minWidth: "100%",
     minHeight: "100%",
     maxWidth: "150%",
     position: "absolute",
-    top: "0",
-    left: "0",
+    top: "50%",
+    left: "50%",
+    transition: "all 0.3s ease-in-out",
+    transform: "translate(-50%, -50%) scale(1)",
+    "&:hover": {
+      transform: "translate(-50%, -50%) scale(0.8)",
+    },
   },
   spinnerWrapper: {
     width: "100%",
@@ -38,8 +41,7 @@ const styles = () => ({
 });
 
 const ImageGrid = (props) => {
-  const { classes } = props;
-
+  const { classes, setSelectedImg } = props;
   const { docs, loading } = useFirestore("images");
 
   return (
@@ -48,8 +50,16 @@ const ImageGrid = (props) => {
         <div className={classes.root}>
           {docs &&
             docs.map((doc) => (
-              <Card key={doc.id} className={classes.card}>
-                <img className={classes.image} src={doc.url} alt="travel" />
+              <Card
+                key={doc.id}
+                className={`${classes.card}`}
+                onClick={(e) => setSelectedImg(doc.url)}
+              >
+                <img
+                  className={`${classes.image}`}
+                  src={doc.url}
+                  alt="travel"
+                />
               </Card>
             ))}
         </div>
